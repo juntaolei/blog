@@ -1,1 +1,3 @@
-
+leiJ -- 2019-10-20 21:07
+  Uploaded the first version of the design document.
+  Updated README.md to accurately reflect the team roles.

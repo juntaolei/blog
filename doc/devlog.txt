@@ -1,3 +1,12 @@
+maoG -- 2019-10-21 17:30 
+  PROGRAMMING SUCKS
+  What Will We Do To Make Our Team More Awesome
+  1. Complete code in steps, to make sure that even if we do something and it breaks everything, we can clearly go back to the previous version and figure out what was wrong (and make sure to let each other know what was wrong so that we can learn from it)
+  2. Don't always turn to Google/StackOverflow/Quora when an error pops up, because many people on the Internet don't actually know what they're talking about since no one really knows what they're talking about and instead we should just consider amongst ourselves and possibly other classmates 
+  3. Communicate well in our team, or else Fred will make walkways that no one actually asked for and Tom and Harry will probably enter a fist fight over the correct standards to use and no one will understand what Phil is doing and someone (or all of us) will end up completing the project at 4 AM on Monday right before dawn
+  
+  Bonus: No matter what the problem is, always consider whether it would be smart to just restart your computer before you make it worse...
+
 leiJ -- 2019-10-20 21:07
   Uploaded the first version of the design document.
   Updated README.md to accurately reflect the team roles.

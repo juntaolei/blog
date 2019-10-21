@@ -1,3 +1,15 @@
+leiJ -- 2019-10-21 18:22
+  SQLite Operations:
+    INNER JOIN:
+      * This operation returns rows from a table with corresponding rows from another table based on the join condition.
+      * INNER JOIN can be used to find the associated entries made by a user based on the user id or other identifiers.
+    LEFT JOIN:
+      * This operation returns rows from a table that can have corresponding rows from another table based on the join condition. The rows that do not have corresponding rows from the other table will have NULL values in place of the values from the other table.
+      * LEFT JOIN can be used to identify the entries for each topic where each topic can have one or more entr(ies) or no entry as represented by NULL.
+    CROSS JOIN: 
+      * This operation returns a set of size N x M where N is the number of rows from a table and M is the number of rows from another table.
+      * CROSS JOIN can be used to identify all entries made for each relevant user. This can be useful in display all the entries made by a user under that user's page in our setup.
+
 maoG -- 2019-10-21 17:30 
   PROGRAMMING SUCKS
   What Will We Do To Make Our Team More Awesome

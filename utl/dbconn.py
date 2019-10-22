@@ -1,14 +1,14 @@
+# Standard library
 from sqlite3 import connect
 from flask import current_app, g
 
-@app.before_request
+# Initialize a database connection
 def conn():
-	if "db" not in g:
-		g.db = connect(current_app.config["DATABASE"])
-	return g.db
+  if "db" not in g:
+	  g.db = connect(current_app.config["DATABASE"])
 
-@app.teardown_request
-def terminate():
+# Close an existing database connection
+def close():
 	db = getattr(g, "db", None)
 	if db is not None:
 		db.close()

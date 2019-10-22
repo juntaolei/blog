@@ -1,3 +1,10 @@
+NicholS -- 2019-10-21 22:02
+  Updates to design doc:
+    * Added specifications on what we are referring to when we use the terms "blog" and "entry"
+    * Added project name
+    * Added to our project components the ability to change the user's password, use a display name, and possibly display featured blogs based on number of views (these were based on good features we saw on other group's proposals)
+    * Made the site map clearer and added add post
+
 leiJ -- 2019-10-21 18:22
   SQLite Operations:
     INNER JOIN:

@@ -1,3 +1,11 @@
+maoG -- 2019-10-22 18:47
+  HTML Progress:
+    * Created login.html template for the login page
+    * Created temporary file testTemplates.py in order to test templates 
+simply
+    * Defined header variable "head" in app.py to fill in for each 
+template (will stay uniform)
+
 NicholS -- 2019-10-21 22:02
   Updates to design doc:
     * Added specifications on what we are referring to when we use the terms "blog" and "entry"

@@ -1,3 +1,11 @@
+maoG -- 2019-10-22 20:20
+  HTML Progress:
+    * Created signup.html and home.html templates for signup and 
+homepages 
+    * Implemented Jinja code blocks in homepage to display unordered 
+list of blogs
+    * Added footers to each page
+
 maoG -- 2019-10-22 18:47
   HTML Progress:
     * Created login.html template for the login page

@@ -1,7 +1,8 @@
 # Standard Lib
 from os import urandom
+from uuid import uuid64
 # Flask Lib
-from flask import Flask, g, session, redirect, url_for
+from flask import Flask, g, session, redirect, url_for, render_template
 
 # Custom Modules
 from utl.dbconn import conn, close
@@ -12,30 +13,47 @@ app = Flask(__name__)
 app.secret_key = urandom(32)
 app.config.from_mapping(DATABASE = "data/database.db")
 
+# Random hash
+app_hash = uuid64().hex
+
 # Invoke database connection before each request is processed
 @app.before_request
 def database_connection():
-  conn()
+  if "usr" in session:
+    conn()
 
 # Terminate database connection after each request is processed
 @app.teardown_request
 def close_database_connection(ex):
   close()
 
-# Testing at the moment
+# Redirects the viewer to the appropriate route
 @app.route("/")
 def index():
   if "usr" in session:
-    redirect(url_for("home"))
-  redirect(url_for("login"))
+    return redirect(url_for("home"))
+  return redirect(url_for("login"))
 
-@app.route("/login")
+# Authenticates the user
+@app.route("/auth")
 def login():
-  return "login"
-
+  if "usr" in session:
+    return redirect(url_for("/home"))
+  try:
+    assert request.args["username"], "No Username Entered"
+    assert request.args["password"], "No Password Entered"
+    if auth(g.db):
+      session["usr"] = request.args["username"]
+      return redirect(url_for("home"))
+  except AssertionError:
+    return render_template("login.html", error = AssertionError.__str__)
+    
+# Displays the home for logged in user
 @app.route("/home")
 def home():
-  return "home"
+  if "usr" in session:
+    return render_template("home.html")
+  return(redirect(url_for("")))
 
 # Executes the Flask app if this file is the main file
 if __name__ == "__main__":

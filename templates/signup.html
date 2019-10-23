@@ -1,29 +1,27 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
     <title>
-      Login
+      Signup
 	  </title>
     <h1> {{ header }} </h1>
   </head>
   <div align="center">
     <body>
-      <h2> Welcome! </h2>
+      <h2> Signup to Blog </h2>
       <br> {{ error }} <br>
-      Login! <br> <br>
       <!-- username and password form -->
       <form action="/auth">
-        Enter your username: <input type="text" name="username"> <br>
-        Enter your password: <input type="text" name="password"> <br> <br>
+        Create your username: <input type="text" name="username"> <br>
+        Create your password: <input type="text" name="password"> <br>
+        Confirm your password: <input type="text" name="confirm"> <br><br>
         <input type="submit">
       </form>
       <br> <br>
-      Don't have an account? <br> <br>
-      <form action="/signup">
-        <input type="submit" value="Register Now!">
+      <form action="/login">
+        <input type="submit" value="Return to Login Page">
       </form>
       <br><br><br><br><br>
     </body>

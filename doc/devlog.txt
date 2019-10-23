@@ -1,3 +1,7 @@
+maoG -- 2019-10-23 14:32
+  HTML Progress:
+    * Created blog.html and post.html templates for blog pages and posts
+
 maoG -- 2019-10-22 20:20
   HTML Progress:
     * Created signup.html and home.html templates for signup and homepages 

@@ -1,5 +1,6 @@
-# Standard library
+# Standard Lib
 from os import urandom
+# Flask Lib
 from flask import Flask, g
 
 # Custom Modules
@@ -23,8 +24,7 @@ def close_database_connection(ex):
 # Testing at the moment
 @app.route("/")
 def index():
-  cur = g.db
-  print(cur)
+  print(g.db)
   return "index"
 
 # Executes the Flask app if this file is the main file

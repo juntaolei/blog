@@ -1,5 +1,6 @@
-# Standard library
+# Standard Lib
 from sqlite3 import connect
+# Flask Lib
 from flask import current_app, g
 
 # Initialize a database connection

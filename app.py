@@ -2,11 +2,12 @@
 from os import urandom
 from uuid import uuid4
 # Flask Lib
-from flask import Flask, g, session, redirect, url_for, render_template, request
+from flask import Flask, g, session, redirect, url_for, render_template, request as req
 
 # Custom Modules
 from utl.dbconn import conn, close
-from utl.auth import auth
+from utl.auth import get_hash, auth
+from utl.dbfunc import insert, get
 
 # Initialize Flask app that stores a reference to a database file
 app = Flask(__name__)
@@ -14,7 +15,7 @@ app.secret_key = urandom(32)
 app.config.from_mapping(DATABASE = "data/database.db")
 
 # Random hash
-app_hash = uuid4().hex
+salt = str(hex(int(uuid4())))
 
 # Initialize the database
 with app.app_context():
@@ -45,26 +46,26 @@ def index():
 def login():
   if "usr" in session:
     return redirect(url_for("/home"))
-  if request.args:
+  if req.args:
     try:
-      assert request.args["username"], "No Username Entered"
-      assert request.args["password"], "No Password Entered"
-      if auth(g.db):
+      assert req.args["username"], "No Username Entered"
+      assert req.args["password"], "No Password Entered"
+      if auth(get("users", "username", req.args["username"]), salt, get("users", "password", req.args["password"])):
         session["usr"] = request.args["username"]
         return redirect(url_for("home"))
     except AssertionError:
       return render_template("login.html", error = AssertionError.__str__)
-  return render_template("login.html")
+  return render_template("login.html", error = "Invalid Credentials")
     
 # Allow the view to signup
 @app.route("/signup")
 def signup():
-  if request.args:
+  if req.args:
     try:
-      assert request.args["username"], "No Username Entered"
-      assert request.args["password"], "No Password Entered"
-      g.db.execute("INSERT INTO users (username, password) VALUES ({0}, {1})".format(request.args["username"], hash(request.args["password"])))
-      session["usr"] = request.args["username"]
+      assert req.args["username"], "No Username Entered"
+      assert req.args["password"], "No Password Entered"
+      print(insert("users", [req.args["username"], get_hash(salt, req.args["password"])]))
+      session["usr"] = req.args["username"]
       return redirect(url_for("home"))
     except AssertionError:
       return render_template("signup.html", error = AssertionError.__str__)

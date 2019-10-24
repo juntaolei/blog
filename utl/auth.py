@@ -3,10 +3,11 @@ from hashlib import sha256
 # Flask Lib
 from flask import g
 
-def hash(password):
-  return sha256(hex(userid) + password).hexdigest()
+def get_hash(salt, password):
+  print(type(sha256((salt + password).encode()).hexdigest()))
+  return sha256((salt + password).encode()).hexdigest()
 
-def auth(password, hash, stored_hash):
-  if hash(userid, password) == stored_hash:
+def auth(password, salt, hashed):
+  if get_hash(salt, password) == hashed:
     return True
   return False

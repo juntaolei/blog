@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block header %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}{% endblock %}</title>
+</head>
+{% endblock %}
+
+<body>
+  <content>
+    {% block body %}
+    {% endblock %}
+  </content>
+  <footer>
+    {% block footer %}
+    <h4>Team Blorb &copy; 2019</h4>
+    <h5>Leia Park & Jun Tao Lei</h5>
+    <h5>SoftDev1 Period 9</h5>
+    {% endblock %}
+  </footer>
+</body>
+
+</html>

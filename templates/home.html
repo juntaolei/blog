@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>
-      Homepage
-	  </title>
-    <h1> {{ header }} </h1>
-  </head>
-  <body>
-    <div align="right">
-      <form action="/ {{ currentUser }}">
-        <input type="submit" value="My Blog">
-      </form>
-    </div>
-    <div align="center">
-      <h2> Blogs </h2>
-      <br>
-      <ul>
-        {% for item in collection %}
-          <li>
-            <a href="{{ link }}">{{ item }}</a> <br> <br>
-          </li>
-        {% endfor %}
-      </ul>
-      <br><br><br><br><br>
-    </div>
-  </body>
-  <footer>
-    {{ footer }} &copy;
-  </footer>
-</html>
+{% extends "base.html" %}
+{% block title %}Cut Once Measure Thrice{% endblock %}
+{% block body %}
+<div align="right">
+  <form action="/ {{ currentUser }}">
+    <input type="submit" value="My Blog">
+  </form>
+</div>
+<div align="center">
+  <h2> Blogs </h2>
+  <br>
+  <ul>
+    {% for item in collection %}
+    <li>
+      <a href="{{ link }}">{{ item }}</a> <br> <br>
+    </li>
+    {% endfor %}
+  </ul>
+  <br><br><br><br><br>
+</div>
+{% endblock %}

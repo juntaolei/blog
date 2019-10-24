@@ -1,7 +1,69 @@
 # blog by quality_assurance
 
-Roster + Role
+# Instructions
+No need to ```pip install``` as this Flask app has no extra dependencies beside Flask.
+To run this Flask app, just ```python3 app.py```
+
+# Modules
+### Auth Module
 ---
+```
+  hash() uses the builtin hashlib to hash a given password.
+  * Implements SHA256
+  * Uses a Flask app wide salt
+  * Returns a hexadecimal representation of the hash
+
+  auth() authenticates a given password with a given hash.
+  * Uses hash() to compute a hash and compare it against the given hash
+
+  hash() is necessary to generate a hash to either store or compare against.
+  auth() is necessary as a wrapper function for authentication.
+
+  hash() and auth() will be used for signup or login functionality.
+  The calculated hash will be stored in the database in place of password.
+```
+
+---
+
+### DBConn Module
+---
+```
+  conn() connects the Flask app to the database.
+  * Connection stored in Flask's g object
+
+  close() terminates an existing SQLite Connection.
+  * Close an existing connection in g if it exist
+
+  conn() and close() are necessary to connect to the database for data addition/retrieval.
+
+  conn() and close() are used in app context to be automatically invoked on HTTP request.
+```
+
+---
+
+### DBFunc Module
+---
+```
+  header_types() returns the types of a table's columns.
+
+  insert() adds a row to a given table.
+
+  get() returns certain piece(s) of data from the database.
+
+  header_types() can clarify the type of the data that needs to be inserted into the database.
+  insert() and get() are necessary in retrieving or adding data to the database.
+
+  header_types() can be used to identify the column types of tables to insure no error with 
+  wrong datatype insertions.
+  insert() and get() are used throughout the Flask app to add, edit, or view data in the following:
+    * /signup
+    * /login
+    * /<username>
+    * /<username>/<blog_id>
+    * ...
+```
+
+# Roster + Role
 * Jun Tao Lei: Sir Project Manager 
 ```
   Route Functions

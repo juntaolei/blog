@@ -1,19 +1,34 @@
+leiJ -- 2019-10-23
+  Clean Repository:
+    * Streamline the HTML templates with inheritance
+    * Streamline the builder file for SQLite3 by adding and removing necessary commands
+    * Added instructions for running this project
+    * Uploaded latest dbconn and dbfunc modules
+  Work on Routes and Auth Module:
+    * Updated hash() and auth() to take an app wide salt
+  *** Beware of breakage especially in the authentication process
+
 maoG -- 2019-10-24 14:29
   HTML Progress:
     * Created edit.html template, meaning that the templates are finished
 
-leiJ -- 2019-10-23
-    * 
-
 nicholS -- 2019-10-23 23:34
-    * Made Users table that takes input username and Password
-    * Facilitated adding users to database
-    * Started functions for tables for individual users/blogs
->>>>>>> nicholS
+  * Made Users table that takes input username and Password
+  * Facilitated adding users to database
+  * Started functions for tables for individual users/blogs
 
 maoG -- 2019-10-23 14:32
   HTML Progress:
     * Created blog.html and post.html templates for blog pages and posts
+
+leiJ -- 2019-10-23 08:40
+  Route Functions:
+    * Added functions for the following routes:
+      * /login
+      * /signup
+      * /home
+  Auth Module:
+    * Added functions for hash() and auth():
 
 maoG -- 2019-10-22 20:20
   HTML Progress:
@@ -48,11 +63,10 @@ leiJ -- 2019-10-21 18:22
 
 maoG -- 2019-10-21 17:30
   PROGRAMMING SUCKS
-  What Will We Do To Make Our Team More Awesome
-  1. Complete code in steps, to make sure that even if we do something and it breaks everything, we can clearly go back to the previous version and figure out what was wrong (and make sure to let each other know what was wrong so that we can learn from it)
-  2. Don't always turn to Google/StackOverflow/Quora when an error pops up, because many people on the Internet don't actually know what they're talking about since no one really knows what they're talking about and instead we should just consider amongst ourselves and possibly other classmates
-  3. Communicate well in our team, or else Fred will make walkways that no one actually asked for and Tom and Harry will probably enter a fist fight over the correct standards to use and no one will understand what Phil is doing and someone (or all of us) will end up completing the project at 4 AM on Monday right before dawn
-
+    What Will We Do To Make Our Team More Awesome
+    1. Complete code in steps, to make sure that even if we do something and it breaks everything, we can clearly go back to the previous version and figure out what was wrong (and make sure to let each other know what was wrong so that we can learn from it)
+    2. Don't always turn to Google/StackOverflow/Quora when an error pops up, because many people on the Internet don't actually know what they're talking about since no one really knows what they're talking about and instead we should just consider amongst ourselves and possibly other classmates
+    3. Communicate well in our team, or else Fred will make walkways that no one actually asked for and Tom and Harry will probably enter a fist fight over the correct standards to use and no one will understand what Phil is doing and someone (or all of us) will end up completing the project at 4 AM on Monday right before dawn
   Bonus: No matter what the problem is, always consider whether it would be smart to just restart your computer before you make it worse...
 
 leiJ -- 2019-10-20 21:07

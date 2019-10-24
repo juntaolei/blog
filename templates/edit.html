@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>
+      Editor
+   </title>
+    <h1> {{ header }} </h1>
+  </head>
+  <body>
+    <div align="center">
+      <form action="/ {{ currentPost }}" id="editorMode">
+        Title <br>
+        <input type="text" name="newTitle" value=" {{ currentPostTitle }}">
+
+        <textarea rows=20 cols="50" name="newContent" form="editorMode">
+          {{ currentPostContent }}
+        </textarea>
+
+        <input type="submit" value="Save">
+      </form>
+    </div>
+  </body>
+  <footer>
+    {{ footer }} &copy;
+  </footer>
+</html>

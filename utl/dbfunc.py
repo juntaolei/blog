@@ -1,3 +1,5 @@
+import sqlite3
+
 # Flask Lib
 from flask import g
 
@@ -19,7 +21,7 @@ def insert(tbl_name, values):
 
 def get(tbl_name, query, identifier):
   cur = g.db.cursor()
-  cur.execute("SELECT {0} FROM {1} WHERE {1}.passwd = '{2}'".format(query, tbl_name, identifier))
+  cur.execute("SELECT " + query + " FROM " + tbl_name + " WHERE " + query + " = '" + identifier + "'")
   values = cur.fetchall()
   for value in values:
     print(value)

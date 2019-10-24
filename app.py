@@ -48,10 +48,12 @@ def login():
     return redirect(url_for("/home"))
   if req.args:
     try:
+      print("asdfghjkl;")
       assert req.args["username"], "No Username Entered"
       assert req.args["password"], "No Password Entered"
       print(get("users", "passwd", req.args["password"]))
-      if auth(get("users", "username", req.args["username"]), salt, get("users", "passwd", req.args["password"])):
+      if auth(req.args["password"], salt, get("users", "passwd", req.args["password"])):
+        print("weee")
         session["usr"] = request.args["username"]
         return redirect(url_for("home"))
       return render_template("login.html", error = "Invalid Credentials")

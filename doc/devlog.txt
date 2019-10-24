@@ -1,3 +1,7 @@
+maoG -- 2019-10-24 14:29
+  HTML Progress:
+    * Created edit.html template, meaning that the templates are finished
+
 maoG -- 2019-10-23 14:32
   HTML Progress:
     * Created blog.html and post.html templates for blog pages and posts

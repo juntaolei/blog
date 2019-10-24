@@ -1,8 +1,8 @@
 # Standard Lib
 from os import urandom
-from uuid import uuid64
+from uuid import uuid4
 # Flask Lib
-from flask import Flask, g, session, redirect, url_for, render_template
+from flask import Flask, g, session, redirect, url_for, render_template, request
 
 # Custom Modules
 from utl.dbconn import conn, close
@@ -14,13 +14,19 @@ app.secret_key = urandom(32)
 app.config.from_mapping(DATABASE = "data/database.db")
 
 # Random hash
-app_hash = uuid64().hex
+app_hash = uuid4().hex
+
+# Initialize the database
+with app.app_context():
+  conn()
+  with app.open_resource("schema.sql") as f:
+    g.db.executescript(f.read().decode('utf8'))
+  close()
 
 # Invoke database connection before each request is processed
 @app.before_request
 def database_connection():
-  if "usr" in session:
-    conn()
+  conn()
 
 # Terminate database connection after each request is processed
 @app.teardown_request
@@ -35,19 +41,35 @@ def index():
   return redirect(url_for("login"))
 
 # Authenticates the user
-@app.route("/auth")
+@app.route("/login")
 def login():
   if "usr" in session:
     return redirect(url_for("/home"))
-  try:
-    assert request.args["username"], "No Username Entered"
-    assert request.args["password"], "No Password Entered"
-    if auth(g.db):
+  if request.args:
+    try:
+      assert request.args["username"], "No Username Entered"
+      assert request.args["password"], "No Password Entered"
+      if auth(g.db):
+        session["usr"] = request.args["username"]
+        return redirect(url_for("home"))
+    except AssertionError:
+      return render_template("login.html", error = AssertionError.__str__)
+  return render_template("login.html")
+    
+# Allow the view to signup
+@app.route("/signup")
+def signup():
+  if request.args:
+    try:
+      assert request.args["username"], "No Username Entered"
+      assert request.args["password"], "No Password Entered"
+      g.db.execute("INSERT INTO users (username, password) VALUES ({0}, {1})".format(request.args["username"], hash(request.args["password"])))
       session["usr"] = request.args["username"]
       return redirect(url_for("home"))
-  except AssertionError:
-    return render_template("login.html", error = AssertionError.__str__)
-    
+    except AssertionError:
+      return render_template("signup.html", error = AssertionError.__str__)
+  return render_template("signup.html")
+
 # Displays the home for logged in user
 @app.route("/home")
 def home():

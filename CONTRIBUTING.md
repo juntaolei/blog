@@ -8,8 +8,8 @@
 
 ### For Major Revision or Addition
 
-1. Create a new branch
-2. Merge from master branch into your own branch
+1. Create a new branch. Please name it the ***revision or addition*** you plan to make.
+2. Merge from master branch into your own branch.
 3. Write your revision or addition.
 4. Test the revision or addition to ensure it works properly.
 5. (CHOICE):

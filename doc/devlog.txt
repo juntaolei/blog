@@ -1,4 +1,4 @@
-leiJ -- 2019-10-23
+leiJ -- 2019-10-23 18:13
   Clean Repository:
     * Streamline the HTML templates with inheritance
     * Streamline the builder file for SQLite3 by adding and removing necessary commands

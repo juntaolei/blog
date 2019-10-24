@@ -10,7 +10,8 @@ def header_types(tbl_name):
 
 def insert(tbl_name, values):
   try:
-    g.db.execute("INSERT INTO {0} (id, username, password) VALUES (1, '{1}')".format(tbl_name, "','".join(values)))
+    g.db.execute("INSERT INTO {0} (id, username, passwd) VALUES (1, '{1}')".format(tbl_name, "','".join(values)))
+    print("asdf")
     g.db.commit()
     return True
   except:
@@ -18,9 +19,12 @@ def insert(tbl_name, values):
 
 def get(tbl_name, query, identifier):
   cur = g.db.cursor()
-  cur.execute("SELECT {0} FROM {1} WHERE {0} = '{2}'".format(query, tbl_name, identifier))
+  cur.execute("SELECT {0} FROM {1} WHERE {1}.passwd = '{2}'".format(query, tbl_name, identifier))
   values = cur.fetchall()
-  n =  [value for value in values]
+  for value in values:
+    print(value)
+  n = [value for value in values]
+  print(n)
   if len(n) == 0:
     return ""
   return n

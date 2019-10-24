@@ -15,7 +15,7 @@ app.secret_key = urandom(32)
 app.config.from_mapping(DATABASE = "data/database.db")
 
 # Random hash
-salt = str(hex(int(uuid4())))
+salt = "abcdef"
 
 # Initialize the database
 with app.app_context():
@@ -50,12 +50,14 @@ def login():
     try:
       assert req.args["username"], "No Username Entered"
       assert req.args["password"], "No Password Entered"
-      if auth(get("users", "username", req.args["username"]), salt, get("users", "password", req.args["password"])):
+      print(get("users", "passwd", req.args["password"]))
+      if auth(get("users", "username", req.args["username"]), salt, get("users", "passwd", req.args["password"])):
         session["usr"] = request.args["username"]
         return redirect(url_for("home"))
+      return render_template("login.html", error = "Invalid Credentials")
     except AssertionError:
       return render_template("login.html", error = AssertionError.__str__)
-  return render_template("login.html", error = "Invalid Credentials")
+  return render_template("login.html")
     
 # Allow the view to signup
 @app.route("/signup")

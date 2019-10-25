@@ -18,7 +18,14 @@ def insert(tbl_name, values):
 
 def get(tbl_name, query, identifier):
   cur = g.db.cursor()
-  cur.execute('SELECT %s FROM %s WHERE %s = %s' % (query, tbl_name, identifier))
+  cur.execute('SELECT %s FROM %s WHERE %s = %s', (query, tbl_name, identifier))
   values = cur.fetchall()
   cur.close()
   return ",".join([value for value in values])
+
+def get_posts():
+    cur = g.db.cursor()
+    conn = sqlite3.connect('database.db')
+    with conn:
+        cur.execute("SELECT * FROM users")
+        print(cur.fetchall())

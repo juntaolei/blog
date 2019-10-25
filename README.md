@@ -1,12 +1,19 @@
 # blog by quality_assurance
 
+# Instructions
+1. Clone this repo.
+2. Install Flask using the following command:
+```
+pip install -U Flask
+```
+3. Run app.py to start the Flask app.
+```
+python3 app.py
+```
+
 # Working Branches
 * master
 * sql_operations for database/backend dev (ongoing)
-
-# Instructions
-No need to ```pip install``` as this Flask app has no extra dependencies beside Flask.
-To run this Flask app, just ```python3 app.py```
 
 # Modules
 ### Auth Module

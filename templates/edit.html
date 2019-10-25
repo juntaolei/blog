@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
+<div align="right">
+    <form action="/ {{ currentUser }}" id="deletion">
+        <input type="submit" value="Delete Post">
+    </form>
+</div>
 <div align="center">
   <form action="/{{ currentPost }}" id="editorMode">
     Title <br>
-    <input type="text" name="newTitle" value=" {{ currentPostTitle }}">
+    <input type="text" name="newTitle" value="{{ currentPostTitle }}">
 
     <textarea rows=20 cols="50" name="newContent" form="editorMode">
           {{ currentPostContent }}

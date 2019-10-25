@@ -2,6 +2,9 @@
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
 <div align="right">
+    <form action = "/{{ currentUser }}/{{ cuurentPost }}/edit" method = "GET">
+        <input type = "submit" name="new_blog" value = "Create Blog">
+    </form>
     <form action="/home">
         <input type="submit" value="Home">
     </form>

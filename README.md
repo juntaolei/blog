@@ -1,5 +1,9 @@
 # blog by quality_assurance
 
+# Working Branches
+* master
+* sql_operations for database/backend dev (ongoing)
+
 # Instructions
 No need to ```pip install``` as this Flask app has no extra dependencies beside Flask.
 To run this Flask app, just ```python3 app.py```

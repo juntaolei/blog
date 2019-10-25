@@ -110,6 +110,12 @@ def blog(userid, blogid):
         return render_template("post.html")
     return redirect("/")
 
+@app.route("/<userid>/<blogid>/edit")
+def edit(userid, blogid):
+    if "user" in session:
+        return render_template("edit.html")
+    return redirect("/")
+
 # Logout the user
 @app.route("/logout")
 def logout():

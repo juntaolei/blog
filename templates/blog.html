@@ -2,21 +2,24 @@
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
 <div align="right">
-  <form action="/home">
-    <input type="submit" value="Home">
-  </form>
+    <form action="/home">
+        <input type="submit" value="Home">
+    </form>
+    <form action="/logout">
+        <input type="submit" value="Logout">
+    </form>
 </div>
 <div align="center">
-  <h2> {{ user }}'s Blog </h2>
-  <br>
-  <h3> Posts </h3> <br> <br>
-  <ul>
-    {% for item in collection %}
-    <li>
-      <a href="{{ link }}">{{ item }}</a> <br> <br>
-    </li>
-    {% endfor %}
-  </ul>
-  <br><br><br><br><br>
+    <h2> {{ user }}'s Blog </h2>
+    <br>
+    <h3> Posts </h3> <br> <br>
+    <ul>
+        {% for item in collection %}
+        <li>
+            <a href="{{ link }}">{{ item }}</a> <br> <br>
+        </li>
+        {% endfor %}
+    </ul>
+    <br><br><br><br><br>
 </div>
 {% endblock %}

@@ -49,21 +49,21 @@ def close_database_connection(Exception):
 # Redirects the viewer to the appropriate route
 @app.route("/")
 def index():
-    if "usr" in session:
+    if "user" in session:
         return redirect(url_for("home"))
     return redirect(url_for("login"))
 
 # Authenticates the user
 @app.route("/login")
 def login():
-    if "usr" in session:
+    if "user" in session:
         return redirect(url_for("/home"))
     if "creds" in g:
         try:
             assert g.username, "No Username Entered"
             assert g.password, "No Password Entered"
             if auth(g.username, g.password):
-                session["usr"] = g.username
+                session["user"] = g.username
                 return redirect(url_for("home"))
             return render_template("login.html", error="Invalid Credentials")
         except AssertionError as ae:
@@ -78,26 +78,44 @@ def signup():
             assert g.username, "No Username Entered"
             assert g.password, "No Password Entered"
             if register(g.username, g.password):
-                session["usr"] = g.username
+                session["user"] = g.username
                 return redirect(url_for("home"))
             return render_template("signup.html", error="User Already Exist")
         except AssertionError as ae:
             return render_template("login.html", error=str(ae.args[0]))
     return render_template("signup.html")
 
-# Displays the home for logged in user
+# Display the home for logged in user
 @app.route("/home")
 def home():
-    if "usr" in session:
-        return render_template("home.html")
-    return(redirect("/"))
+    if "user" in session:
+        collection = zip(get("users", "displayname").split(
+            ","), get("users", "userid").split(","))
+        return render_template("home.html", collection=collection)
+    return redirect("/")
+
+# Display the blog for each user
+@app.route("/<userid>")
+def user(userid):
+    if "user" in session:
+        collections = get("blogs", "title, userid",
+                          "WHERE userid = %s" % userid).split(",")
+        return render_template("blog.html", user=session["user"], collections=collections)
+    return redirect("/")
+
+# Display the entry for each user's blog
+@app.route("/<userid>/<blogid>")
+def blog(userid, blogid):
+    if "user" in session:
+        return render_template("post.html")
+    return redirect("/")
 
 # Logout the user
 @app.route("/logout")
 def logout():
-    if "usr" in session:
-        session.pop("usr", None)
-    return(redirect("/"))
+    if "user" in session:
+        session.pop("user", None)
+    return redirect("/")
 
 
 # Executes the Flask app if this file is the main file

@@ -23,7 +23,6 @@ def insert(tbl_name, values):
 
 def get(tbl_name, column, conditional=""):
     cur = g.db.cursor()
-    print("SELECT %s FROM %s %s" % (column, tbl_name, conditional))
     cur.execute("SELECT %s FROM %s %s" % (column, tbl_name, conditional))
     values = cur.fetchall()
     cur.close()

@@ -13,6 +13,9 @@
     <h2> {{ user }}'s Blog </h2>
     <br>
     <h3> Posts </h3> <br> <br>
+    <form action="/edit/{{ blogid }}">
+      <input type="submit" value="New Post">
+    </form>
     <ul>
         {% for item in collection %}
         <li>

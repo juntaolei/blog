@@ -1,3 +1,10 @@
+maoG -- 2019-10-26 11:13
+  Adding Features:
+    * Added new post button
+    * Attempted to create connection between edit page and database 
+(nicholS will continue)
+    * Fixed syntax throughout templates
+
 leiJ -- 2019-10-23 18:13
   Clean Repository:
     * Streamline the HTML templates with inheritance

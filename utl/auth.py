@@ -6,7 +6,6 @@ from flask import current_app, g
 # User Modules
 from .dbfunc import insert, get
 
-
 def get_hash(password):
     return sha256((current_app.config["SALT"] + password).encode()).hexdigest()
 

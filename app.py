@@ -99,8 +99,7 @@ def home():
 @app.route("/<userid>")
 def user(userid):
     if "user" in session:
-        collections = get("blogs", "title, userid",
-                          "WHERE userid = %s" % userid).split(",")
+        collections = get("blogs", "title, userid", "WHERE userid = %s" % userid).split(",")
         return render_template("blog.html", user=session["user"], collections=collections)
     return redirect("/")
 
@@ -108,12 +107,20 @@ def user(userid):
 @app.route("/<userid>/<blogid>")
 def blog(userid, blogid):
     if "user" in session:
+        return render_template("post.html")
+        """
         if request.method == 'POST':
             if request.form['new_post'] == 'Create Post':
                 create_post(g.userid, g.username)
                 return render_template("edit.html")
-        else:
-            return render_template("post.html")
+        else:"""
+    return redirect("/")
+
+@app.route("/newpost/<userid>")
+def newpost(userid):
+    if "user" in session:
+        blogid = create_post(userid)
+        return redirect("/<userid>/<blogid>/edit")
     return redirect("/")
 
 @app.route("/<userid>/<blogid>/edit")

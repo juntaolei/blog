@@ -2,8 +2,11 @@
 from .dbfunc import insert, get
 from flask import g
 
-def create_post(user_id, author):
-    insert("blogs", [user_id, author])
+def create_post(userid):
+    auth = get("users", "username", "WHERE userid = %s" % userid)
+    insert("blogs", [userid, auth])
+    blog_id = get("blogs", "blogid", "WHERE title = %s" % NULL)
+    return blog_id
 
 def update_post(blog_id, blog_title, blog_content, time_stamp):
     cur = g.db.cursor()

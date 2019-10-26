@@ -8,6 +8,7 @@ from flask import Flask, g, session, redirect, url_for, render_template, request
 from utl.dbconn import conn, close
 from utl.auth import get_hash, auth, register
 from utl.dbfunc import insert, get
+from utl.edit import create_post, delete_post, update_post
 
 # Initialize Flask app that stores a reference to a database file and the salt
 app = Flask(__name__)
@@ -109,7 +110,7 @@ def blog(userid, blogid):
     if "user" in session:
         if request.method == 'POST':
             if request.form['new_post'] == 'Create Post':
-                pass create_post(g.userid, g.username)
+                create_post(g.userid, g.username)
                 return render_template("edit.html")
         else:
             return render_template("post.html")

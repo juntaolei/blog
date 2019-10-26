@@ -107,7 +107,12 @@ def user(userid):
 @app.route("/<userid>/<blogid>")
 def blog(userid, blogid):
     if "user" in session:
-        return render_template("post.html")
+        if request.method == 'POST':
+            if request.form['new_post'] == 'Create Post':
+                pass create_post(g.userid, g.username)
+                return render_template("edit.html")
+        else:
+            return render_template("post.html")
     return redirect("/")
 
 @app.route("/<userid>/<blogid>/edit")

@@ -2,7 +2,7 @@
 from .dbfunc import insert, get
 from flask import g
 
-def new_post(user_id, author):
+def create_post(user_id, author):
     insert("blogs", [user_id, author])
 
 def update_post(blog_id, blog_title, blog_content, time_stamp):

@@ -17,16 +17,17 @@
         {% if error %}
         {{ error }} <br>
         {% endif %}
-        {% if not title %}
+        {% if title %}
         Title: <input type="text" name="newTitle" value="{{ title }}">
-        {% else %}
-        <input type="hidden" name="newTitle" value="{{ title }}">
-        Title: {{ title }}
-        {% endif %}
+
         <br> <br>
         <textarea name="newContent" rows="10" cols="50"> {{ content }} </textarea>
         <br> <br>
         <input type="submit" value="Save">
+        {% else %}
+        <input type="hidden" name="newTitle" value="{{ title }}">
+        Title: {{ title }}
+        {% endif %}
     </form>
 </div>
 {% endblock %}

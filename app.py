@@ -216,7 +216,7 @@ def update(userid, blogid = "new"):
                 assert not get("blogs", "title", "WHERE title = '%s'" % title), "Duplicate Title"
                 blogid = create_post(userid, author, title, content)
             else:
-                update_post(blogid, content)
+                update_post(blogid, content, title)
             return redirect(
                 url_for(
                     "post",

@@ -14,12 +14,12 @@ def create_post(userid, author, title, content):
         return False
 
 
-def update_post(blogid, blogcontent):
+def update_post(blogid, blogcontent, blogtitle):
     try:
         cur = g.db.cursor()
         cur.execute(
-            "UPDATE blogs SET content = '%s', lastupdated = datetime('now') WHERE blogid = '%s'" % (
-                blogcontent, blogid
+            "UPDATE blogs SET content = '%s', lastupdated = datetime('now'), title='%s' WHERE blogid = '%s'" % (
+                blogcontent, blogtitle, blogid
             )
         )
         g.db.commit()

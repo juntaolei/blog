@@ -2,7 +2,7 @@
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
 <div align="right">
-    <form action="/delete" id="deletion">
+    <form action="{{ url_for('delete', userid = userid, blogid = blogid) }}" id="deletion">
         <input type="submit" value="Delete Post">
     </form>
 </div>

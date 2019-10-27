@@ -1,3 +1,8 @@
+leiJ -- 2019-10-27 17:23
+  Reviewed and merged edit branch into master branch that allows the app to now:
+    * Change Settings
+    * Basic Search
+
 leiJ -- 2019-10-27 10:06
   Reviewed and merged edit branch into master branch that allows the app to now:
     * Delete Post

@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
+<div align="right">
+    <form action="/delete" id="deletion">
+        <input type="submit" value="Delete Post">
+    </form>
+</div>
 <div align="center">
-  <form action="/{{ userId }}/{{ currentPost }}" id="editorMode">
-    Title <br>
-    <input type="text" name="newTitle" value=" {{ currentPostTitle }}">
-    <br> <br> <br>
-    <textarea rows=20 cols="50" name="newContent" form="editorMode">
-          {{ currentPostContent }}
+    {% if error %}
+    {{ error }}
+    {% endif %}
+    <form action="{{ url_for('update', userid = userid, blogid = blogid) }}" id="editorMode">
+        Title: <input type="text" name="newTitle" value="{{ title }}">
+        <br> <br> <br>
+        <textarea rows=20 cols="50" name="newContent" form="editorMode">
+          {{ content }}
         </textarea>
-    <br> <br>
-    <input type="submit" value="Save">
-  </form>
+        <br> <br>
+        <input type="submit" value="Save">
+    </form>
 </div>
 {% endblock %}

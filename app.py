@@ -8,6 +8,7 @@ from flask import Flask, g, session, redirect, url_for, render_template, request
 from utl.dbconn import conn, close
 from utl.auth import get_hash, auth, register
 from utl.dbfunc import insert, get
+from utl.edit import create_post, delete_post, update_post
 
 # Initialize Flask app that stores a reference to a database file and the salt
 app = Flask(__name__)
@@ -89,8 +90,7 @@ def signup():
 @app.route("/home")
 def home():
     if "user" in session:
-        collection = zip(get("users", "displayname").split(
-            ","), get("users", "userid").split(","))
+        collection = get("users", "userid, displayname")
         return render_template("home.html", collection=collection)
     return redirect("/")
 
@@ -98,16 +98,56 @@ def home():
 @app.route("/<userid>")
 def user(userid):
     if "user" in session:
-        collections = get("blogs", "title, userid",
-                          "WHERE userid = %s" % userid).split(",")
-        return render_template("blog.html", user=session["user"], collections=collections)
+        selected_user = get("users", "username", "WHERE userid = '%s'" % userid)[0][0]
+        collections = get("blogs", "title, blogid",
+                          "WHERE userid = '%s'" % userid)
+        return render_template("blog.html", userid=userid, user=selected_user, collection=collections)
     return redirect("/")
 
 # Display the entry for each user's blog
 @app.route("/<userid>/<blogid>")
-def blog(userid, blogid):
+def post(userid, blogid):
     if "user" in session:
-        return render_template("post.html")
+        author = get("blogs", "author", "WHERE blogid = '%s'" % blogid)[0][0]
+        title = get("blogs", "title", "WHERE blogid = '%s'" % blogid)[0][0]
+        content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)[0][0]
+        lastupdated = get("blogs", "lastupdated", "WHERE blogid = '%s'" % blogid)[0][0]
+        return render_template("post.html", userid = userid, blogid = blogid, content = content, author = author, title = title, lastupdated = lastupdated)
+    return redirect("/")
+
+
+@app.route("/<userid>/<blogid>/update")
+def update(userid, blogid = "new"):
+    if "user" in session:
+        try:
+            assert request.args["newTitle"], "No Title Entered"
+            author = get("users", "displayname",
+                         "WHERE username = '%s'" % session["user"])[0][0]
+            title = request.args["newTitle"]
+            content = request.args["newContent"]
+            if blogid == "new":
+                blogid = create_post(userid, author, title, content)
+            else:
+                update_post(blogid, content)
+            return redirect(url_for("post", userid = userid, blogid = blogid))
+        except AssertionError as ae:
+            return render_template("edit.html", error=str(ae.args[0]))
+    return redirect("/")
+
+@app.route("/<userid>/new/edit")
+@app.route("/<userid>/<blogid>/edit")
+@app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>")
+def edit(userid, blogid = "new", title = "", content = ""):
+    if "user" in session:
+        print(userid)
+        return render_template("edit.html", userid = userid, blogid = blogid, title = title, content = content)
+    return redirect("/")
+
+
+@app.route("/delete")
+def delete():
+    if "usr" in session:
+        pass
     return redirect("/")
 
 # Edit mode for adding or editing posts

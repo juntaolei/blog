@@ -16,8 +16,6 @@ python3 app.py
 
 # Working Branches
 * master
-* sql_operations for database/backend dev (to be reviewed and merged) (ongoing)
-* db_debug (conflict with sql_operations due to duplicate) (to be reviewed and merged) (work on sql_operations)
 * edit (ongoing)
 
 # Modules

@@ -1,3 +1,9 @@
+maoG -- 2019-10-27 19:09
+  Final Edits
+    * reviewed project as a whole (self demo)
+    * fixed bugs when user tries to edit someone else's stuff
+    * updated devlog and design doc
+
 leiJ -- 2019-10-27 17:23
   Reviewed and merged edit branch into master branch that allows the app to now:
     * Change Settings
@@ -29,7 +35,7 @@ maoG -- 2019-10-26 11:13
 leiJ -- 2019-10-25 21:11
   Reviewed and merged branches into master
   Updated documentation
-  
+
 nicholS -- 2019-10-25 19:53
    Creating, Editing, and Deleting Blogs:
      * Added create blog and delete blog to templates

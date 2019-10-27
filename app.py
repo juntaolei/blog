@@ -161,7 +161,7 @@ def user(userid):
             return render_template(
                 "blog.html",
                 canedit = False,
-                userid = userid, 
+                userid = userid,
                 user = selected_user,
                 collection = collection
             )
@@ -241,10 +241,7 @@ def update(userid, blogid = "new"):
 def edit(userid, blogid = "new", title = "", content = ""):
     if "isloggedin" in session:
         if userid != session["userid"]:
-            return render_template(
-                "edit.html",
-                canedit = False
-            )
+            return redirect("/{}/{}".format(userid, blogid))
         return render_template(
             "edit.html",
             canedit = True,

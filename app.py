@@ -6,7 +6,7 @@ from flask import Flask, g, session, redirect, url_for, render_template, request
 
 # Custom Modules
 from utl.dbconn import conn, close
-from utl.auth import get_hash, auth, register
+from utl.auth import get_hash, auth, register, currentUser
 from utl.dbfunc import insert, get
 from utl.edit import create_post, delete_post, update_post
 
@@ -58,7 +58,7 @@ def index():
 @app.route("/login")
 def login():
     if "user" in session:
-        return redirect(url_for("/home"))
+        return redirect(url_for("home"))
     if "creds" in g:
         try:
             assert g.username, "No Username Entered"
@@ -93,6 +93,15 @@ def home():
         collection = get("users", "userid, displayname")
         return render_template("home.html", collection=collection)
     return redirect("/")
+
+# Display blog of logged in user
+@app.route("/myblog")
+def myblog():
+    if "user" in session:
+        userid = currentUser()
+        return redirect("/<userid>")
+    return redirect("/")
+
 
 # Display the blog for each user
 @app.route("/<userid>")

@@ -209,6 +209,7 @@ def update(userid, blogid = "new"):
         try:
             assert request.args["newTitle"], "No Title Entered"
             title = request.args["newTitle"]
+            assert not get("blogs", "title", "WHERE title = '%s'" % title), "Duplicate Title"
             author = get("users", "displayname",
                          "WHERE username = '%s'" % session["username"])[0][0]
             content = request.args["newContent"]
@@ -290,6 +291,17 @@ def changesettings():
             "settings.html",
             displayname = get("users", "displayname",
                             "WHERE userid = '%s'" % session["userid"])[0][0]
+        )
+    return redirect("/")
+
+@app.route("/search")
+def search():
+    if "isloggedin" in session:
+        collection = get("blogs", "title, blogid, userid",
+                         "WHERE title LIKE '%s'" % request.args["query"])
+        return render_template(
+            "results.html",
+            collection = collection
         )
     return redirect("/")
 

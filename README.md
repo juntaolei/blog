@@ -1,6 +1,7 @@
 # blog by quality_assurance
 
 Dev Branch Status Below
+Check ***Issues***
 
 # Instructions
 1. Clone this repo.
@@ -15,8 +16,7 @@ python3 app.py
 
 # Working Branches
 * master
-* sql_operations for database/backend dev (ongoing)
-* db_debug (conflict with sql_operations due to duplicate) (to be reviewed and merged) (work on sql_operations)
+* edit (ongoing)
 
 # Modules
 ### Auth Module

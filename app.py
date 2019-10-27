@@ -150,6 +150,14 @@ def delete():
         pass
     return redirect("/")
 
+# Edit mode for adding or editing posts
+@app.route("/edit/<blogid>")
+def edit(blogid):
+    if "user" in session:
+        return render_template("edit.html",userId=session["user"],
+                                currentPost=blogid)
+    return redirect("/")
+
 # Logout the user
 @app.route("/logout")
 def logout():

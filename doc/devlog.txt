@@ -1,6 +1,18 @@
+leiJ -- 2019-10-27 10:06
+  Reviewed and merged edit branch into master branch that allows the app to now:
+    * Delete Post
+    * Fixed problems with edit permissions
+    * Changed what session stores
+
 nicholS 2019-10-27 00:46
   * worked on "my blog" redirecting to user blog
   * edited post.html and blog.html templates to clean them up
+
+leiJ -- 2019-10-26 21:46
+  Reviewed and merged edit branch into master branch that allows the app to now:
+    * Edit
+    * Create Post
+  Fixed the problem with routing error and fetching data from database
 
 maoG -- 2019-10-26 11:13
   Adding Features:
@@ -9,18 +21,22 @@ maoG -- 2019-10-26 11:13
 (nicholS will continue)
     * Fixed syntax throughout templates
 
+leiJ -- 2019-10-25 21:11
+  Reviewed and merged branches into master
+  Updated documentation
+  
 nicholS -- 2019-10-25 19:53
-    Creating, Editing, and Deleting Blogs:
-      * Added create blog and delete blog to templates
-      * Added edit route to display edit.html for each post
-      * Added python methods to create, delete, and update Posts
+   Creating, Editing, and Deleting Blogs:
+     * Added create blog and delete blog to templates
+     * Added edit route to display edit.html for each post
+     * Added python methods to create, delete, and update Posts
 
 nicholS -- 2019-10-24 22:53
-    Database:
-      * tried to fix problems with adding to databases
-      * tried new login function
+   Database:
+     * tried to fix problems with adding to databases
+     * tried new login function
 
-leiJ -- 2019-10-23 18:13
+leiJ -- 2019-10-24 18:13
   Clean Repository:
     * Streamline the HTML templates with inheritance
     * Streamline the builder file for SQLite3 by adding and removing necessary commands

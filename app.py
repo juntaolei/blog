@@ -227,7 +227,11 @@ def update(userid, blogid = "new"):
         except AssertionError as ae:
             return render_template(
                 "edit.html",
-                error = str(ae.args[0])
+                error = str(ae.args[0]),
+                userid = userid,
+                blogid = blogid,
+                title = "",
+                content = request.args["newContent"]
             )
     return redirect("/")
 

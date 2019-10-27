@@ -14,16 +14,41 @@ def create_post(userid, author, title, content):
         return False
 
 
-def update_post(blog_id, blog_content):
+def update_post(blogid, blogcontent):
     try:
         cur = g.db.cursor()
         cur.execute(
-            "UPDATE blogs SET content = '%s', lastupdated = datetime('now') WHERE blogid = '%s'" % (blog_content, blog_id))
+            "UPDATE blogs SET content = '%s', lastupdated = datetime('now') WHERE blogid = '%s'" % (
+                blogcontent, blogid
+            )
+        )
         g.db.commit()
         cur.close()
         return True
     except:
         return False
+
+
+def update_user(username, field, newvalue):
+    try:
+        cur = g.db.cursor()
+        print("UPDATE users SET %s = '%s' WHERE username = '%s'" % (
+            field,
+            newvalue,
+            username
+        ))
+        cur.execute(
+            "UPDATE users SET %s = '%s' WHERE username = '%s'" % (
+                field,
+                newvalue,
+                username
+            )
+        )
+        g.db.commit()
+        cur.close()
+        return "Operation Successful"
+    except:
+        return "Error With Update"
 
 
 def delete_post(blogid):

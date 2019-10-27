@@ -7,16 +7,16 @@
     </form>
 </div>
 <div align="center">
-    {% if error %}
-    {{ error }}
-    {% endif %}
-    <form action="{{ url_for('update', userid = userid, blogid = blogid) }}" id="editorMode">
+    <form action="{{ url_for('update', userid = userid, title = title, blogid = blogid) }}" id="editorMode">
+        {% if not title %}
         Title: <input type="text" name="newTitle" value="{{ title }}">
-        <br> <br> <br>
-        <textarea rows=20 cols="50" name="newContent" form="editorMode">
-          {{ content }}
-        </textarea>
-        <br> <br>
+        {% else %}
+        <input type="hidden" name="newTitle" value="{{ title }}">
+        Title: {{ title }}
+        {% endif %}
+        <br>
+        <textarea name="newContent" form="editorMode"> {{ content }} </textarea>
+        <br>
         <input type="submit" value="Save">
     </form>
 </div>

@@ -6,9 +6,9 @@ from flask import Flask, g, session, redirect, url_for, render_template, request
 
 # Custom Modules
 from utl.dbconn import conn, close
-from utl.auth import get_hash, auth, register
+from utl.auth import get_hash, auth, register, update_auth
 from utl.dbfunc import insert, get
-from utl.edit import create_post, delete_post, update_post
+from utl.edit import create_post, delete_post, update_post, update_user
 
 # Initialize Flask app that stores a reference to a database file and the salt
 app = Flask(__name__)
@@ -16,7 +16,9 @@ app.secret_key = urandom(32)
 if not path.exists("data/database.db"):
     with open("data/database.db", "w+") as f:
         f.close()
-app.config.from_mapping(DATABASE="data/database.db")
+app.config.from_mapping(
+    DATABASE="data/database.db"
+)
 
 # Initialize the database
 with app.app_context():
@@ -27,9 +29,13 @@ with app.app_context():
     if not existing_salt:
         salt = str(uuid4())
         insert("storedsalt", [0, salt])
-        app.config.from_mapping(SALT=salt)
+        app.config.from_mapping(
+            SALT=salt
+        )
     else:
-        app.config.from_mapping(SALT=existing_salt[0][0])
+        app.config.from_mapping(
+            SALT=existing_salt[0][0]
+        )
     close()
 
 # Invoke database connection before each request is processed
@@ -58,8 +64,12 @@ def close_database_connection(Exception):
 @app.route("/")
 def index():
     if "isloggedin" in session:
-        return redirect(url_for("home"))
-    return redirect(url_for("login"))
+        return redirect(
+            url_for("home")
+        )
+    return redirect(
+        url_for("login")
+    )
 
 # Authenticates the user
 @app.route("/login")
@@ -74,10 +84,18 @@ def login():
                 session["isloggedin"] = True
                 session["username"] = g.username
                 session["userid"] = str(get("users", "userid", "WHERE username = '%s'" % g.username)[0][0])
-                return redirect(url_for("home"))
-            return render_template("login.html", error="Invalid Credentials")
+                return redirect(
+                    url_for("home")
+                )
+            return render_template(
+                "login.html",
+                error="Invalid Credentials"
+            )
         except AssertionError as ae:
-            return render_template("login.html", error=str(ae.args[0]))
+            return render_template(
+                "login.html",
+                error=str(ae.args[0])
+            )
     return render_template("login.html")
 
 # Allow the view to signup
@@ -94,10 +112,18 @@ def signup():
                 session["username"] = g.username
                 session["userid"] = str(get(
                     "users", "userid", "WHERE username = '%s'" % g.username)[0][0])
-                return redirect(url_for("home"))
-            return render_template("signup.html", error="Registration Failed")
+                return redirect(
+                    url_for("home")
+                )
+            return render_template(
+                "signup.html",
+                error = "Registration Failed"
+            )
         except AssertionError as ae:
-            return render_template("signup.html", error=str(ae.args[0]))
+            return render_template(
+                "signup.html",
+                error = str(ae.args[0])
+            )
     return render_template("signup.html")
 
 # Display the home for logged in user
@@ -105,14 +131,22 @@ def signup():
 def home():
     if "isloggedin" in session:
         collection = get("users", "userid, displayname")
-        return render_template("home.html", collection=collection)
+        return render_template(
+            "home.html",
+            collection = collection
+        )
     return redirect("/")
 
 # Display blog of logged in user
 @app.route("/myblog")
 def myblog():
     if "isloggedin" in session:
-        return redirect(url_for("user", userid = session["userid"]))
+        return redirect(
+            url_for(
+                "user",
+                userid = session["userid"]
+            )
+        )
     return redirect("/")
 
 
@@ -124,8 +158,20 @@ def user(userid):
         collection = get("blogs", "title, blogid",
                           "WHERE userid = '%s'" % userid)
         if userid != session["userid"]:
-            return render_template("blog.html", canedit = False, userid=userid ,user = selected_user, collection = collection)
-        return render_template("blog.html", canedit = True, userid=userid, user=selected_user, collection = collection)
+            return render_template(
+                "blog.html",
+                canedit = False,
+                userid = userid, 
+                user = selected_user,
+                collection = collection
+            )
+        return render_template(
+            "blog.html",
+            canedit = True,
+            userid = userid,
+            user = selected_user,
+            collection = collection
+        )
     return redirect("/")
 
 # Display the entry for each user's blog
@@ -137,8 +183,23 @@ def post(userid, blogid):
         content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)[0][0]
         lastupdated = get("blogs", "lastupdated", "WHERE blogid = '%s'" % blogid)[0][0]
         if userid != session["userid"]:
-            return render_template("post.html", canedit = False, title = title, content = content, author = author, lastupdated = lastupdated)
-        return render_template("post.html", canedit = True, userid = userid, blogid = blogid, content = content, author = author, title = title, lastupdated = lastupdated)
+            return render_template("post.html",
+                canedit = False,
+                title = title,
+                content = content,
+                author = author,
+                lastupdated = lastupdated
+            )
+        return render_template(
+            "post.html",
+            canedit = True,
+            userid = userid,
+            blogid = blogid,
+            content = content,
+            author = author,
+            title = title,
+            lastupdated = lastupdated
+        )
     return redirect("/")
 
 
@@ -147,17 +208,26 @@ def update(userid, blogid = "new"):
     if "isloggedin" in session:
         try:
             assert request.args["newTitle"], "No Title Entered"
+            title = request.args["newTitle"]
             author = get("users", "displayname",
                          "WHERE username = '%s'" % session["username"])[0][0]
-            title = request.args["newTitle"]
             content = request.args["newContent"]
             if blogid == "new":
                 blogid = create_post(userid, author, title, content)
             else:
                 update_post(blogid, content)
-            return redirect(url_for("post", userid = userid, blogid = blogid))
+            return redirect(
+                url_for(
+                    "post",
+                    userid = userid,
+                    blogid = blogid
+                )
+            )
         except AssertionError as ae:
-            return render_template("edit.html", error=str(ae.args[0]))
+            return render_template(
+                "edit.html",
+                error = str(ae.args[0])
+            )
     return redirect("/")
 
 @app.route("/<userid>/new/edit")
@@ -166,8 +236,18 @@ def update(userid, blogid = "new"):
 def edit(userid, blogid = "new", title = "", content = ""):
     if "isloggedin" in session:
         if userid != session["userid"]:
-            return render_template("edit.html", canedit = False)
-        return render_template("edit.html", canedit = True, userid = userid, blogid = blogid, title = title, content = content)
+            return render_template(
+                "edit.html",
+                canedit = False
+            )
+        return render_template(
+            "edit.html",
+            canedit = True,
+            userid = userid,
+            blogid = blogid,
+            title = title,
+            content = content
+        )
     return redirect("/")
 
 
@@ -175,6 +255,42 @@ def edit(userid, blogid = "new", title = "", content = ""):
 def delete(userid, blogid):
     if "isloggedin" in session and userid == session["userid"]:
         delete_post(blogid)
+    return redirect("/")
+
+@app.route("/changesettings")
+def changesettings():
+    if "isloggedin" in session and session["userid"]:
+        if request.args:
+            if request.args["newdisplayname"]:
+                msg = update_user(session["username"], "displayname",
+                            request.args["newdisplayname"])
+            if request.args["newpassword"]:
+                try:
+                    print(request.args["newpassword"])
+                    print(request.args["currentpassword"])
+                    assert request.args["currentpassword"], "Enter Your Current Password"
+                    assert request.args["newpassword"] == request.args["confirm"], "Mismatched New Passwords"
+                    msg = update_auth(
+                        session["username"],
+                        request.args["currentpassword"],
+                        request.args["newpassword"]
+                    )
+                except AssertionError as ae:
+                    return render_template(
+                        "settings.html",
+                        msg = str(ae.args[0])
+                    )
+            return render_template(
+                "settings.html",
+                displayname = get("users", "displayname",
+                                "WHERE userid = '%s'" % session["userid"])[0][0],
+                msg = msg
+            )
+        return render_template(
+            "settings.html",
+            displayname = get("users", "displayname",
+                            "WHERE userid = '%s'" % session["userid"])[0][0]
+        )
     return redirect("/")
 
 # Logout the user

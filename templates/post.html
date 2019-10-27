@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
-<div align="left">
+<div align="right">
     {% if canedit %}
     <form action="{{ url_for('edit', userid = userid, blogid = blogid, title = title, content = content) }}">
         <input type="submit" value="Edit">
     </form>
     {% endif %}
-</div>
-<div align="right">
     <form action="/home">
         <input type="submit" value="Home">
     </form>

@@ -2,22 +2,22 @@
 {% block title %}Measure Once Cut Thrice{% endblock %}
 {% block body %}
 <div align="left">
-  <form action="/edit">
-    <input type="submit" value="Edit">
-  </form>
+    <form action="{{ url_for('edit', userid = userid, blogid = blogid, title = title, content = content) }}">
+        <input type="submit" value="Edit">
+    </form>
 </div>
 <div align="right">
-  <form action="/home">
-    <input type="submit" value="Home">
-  </form>
+    <form action="/home">
+        <input type="submit" value="Home">
+    </form>
 </div>
 <div align="center">
-  <h2> {{ post_title }} </h2>
-  <br>
-  <h3> {{ author }} </h3> <br>
-  <h3> Created: {{ time_created }} <br>
-    <h3> Updated: {{ time_updated }} <br> <br>
-      {{ content }}
-      <br><br><br><br><br>
+    <h2> {{ title }} </h2>
+    <br>
+    <h3> {{ author }} </h3> <br>
+    <h3> Created: {{ time_created }} </h3> <br>
+    <h3> Updated: {{ lastupdated }} </h3> <br> <br>
+    {{ content }}
+    <br><br><br><br><br>
 </div>
 {% endblock %}

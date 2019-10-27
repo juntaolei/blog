@@ -108,13 +108,16 @@ def user(userid):
 @app.route("/<userid>/<blogid>")
 def post(userid, blogid):
     if "user" in session:
-        content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)
-        return render_template("post.html", content = content)
+        author = get("blogs", "author", "WHERE blogid = '%s'" % blogid)[0][0]
+        title = get("blogs", "title", "WHERE blogid = '%s'" % blogid)[0][0]
+        content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)[0][0]
+        lastupdated = get("blogs", "lastupdated", "WHERE blogid = '%s'" % blogid)[0][0]
+        return render_template("post.html", userid = userid, blogid = blogid, content = content, author = author, title = title, lastupdated = lastupdated)
     return redirect("/")
 
 
-@app.route("/<userid>/update")
-def update(userid, blogid = ""):
+@app.route("/<userid>/<blogid>/update")
+def update(userid, blogid = "new"):
     if "user" in session:
         try:
             assert request.args["newTitle"], "No Title Entered"
@@ -122,23 +125,22 @@ def update(userid, blogid = ""):
                          "WHERE username = '%s'" % session["user"])[0][0]
             title = request.args["newTitle"]
             content = request.args["newContent"]
-            blogid = create_post(userid, author, title, content)
+            if blogid == "new":
+                blogid = create_post(userid, author, title, content)
+            else:
+                update_post(blogid, content)
             return redirect(url_for("post", userid = userid, blogid = blogid))
         except AssertionError as ae:
             return render_template("edit.html", error=str(ae.args[0]))
     return redirect("/")
 
-
 @app.route("/<userid>/new/edit")
 @app.route("/<userid>/<blogid>/edit")
-def edit(userid = "", blogid = ""):
+@app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>")
+def edit(userid, blogid = "new", title = "", content = ""):
     if "user" in session:
-        if not blogid:
-            title = get("blogs", "title", "WHERE blogid = '%s'" % blogid)
-            content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)
-            return render_template("edit.html", userid = userid, blogid = blogid, title=title, content=content)
-        else:
-            return render_template("edit.html")
+        print(userid)
+        return render_template("edit.html", userid = userid, blogid = blogid, title = title, content = content)
     return redirect("/")
 
 

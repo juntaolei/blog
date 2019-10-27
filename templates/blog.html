@@ -12,10 +12,12 @@
 <div align="center">
     <h2> {{ user }}'s Blog </h2>
     <br>
-    <h3> Posts </h3> <br> <br>
+    <h3> Posts </h3>
+    {% if canedit %}
     <form action="{{ url_for('edit', userid = userid) }}">
         <input type="submit" value="New Post">
     </form>
+    {% endif %}
     <ul>
         {% for item in collection %}
         <li>

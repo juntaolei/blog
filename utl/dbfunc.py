@@ -27,7 +27,7 @@ def insert(tbl_name, values):
         cur.execute("INSERT INTO %s VALUES (%s)" %
                     (tbl_name, data_string[:-1]))
         g.db.commit()
-        print("DONE")
+        cur.close()
         return True
     except:
         return False
@@ -35,10 +35,7 @@ def insert(tbl_name, values):
 
 def get(tbl_name, column, conditional=""):
     cur = g.db.cursor()
-    print("SELECT %s FROM %s %s" % (column, tbl_name, conditional))
     cur.execute("SELECT %s FROM %s %s" % (column, tbl_name, conditional))
     values = cur.fetchall()
-    for value in values:
-        print(list(value))
     cur.close()
     return [list(value) for value in values]

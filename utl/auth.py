@@ -14,15 +14,16 @@ def get_hash(password):
 def auth(username, password):
     try:
         hashpassword = get("users", "hashpassword",
-                           "WHERE username = '%s'" % (username))[0][0]
+                           "WHERE username = '%s'" % username)[0][0]
         if get_hash(password) == hashpassword:
             return True
     except:
-        pass
-    return False
+        return False
 
 
-def register(username, password):
+def register(username, password, displayname):
     if not auth(username, password):
-        insert("users", ["NULL", username, get_hash(password), username])
+        if not displayname:
+            displayname = username
+        insert("users", ["NULL", username, get_hash(password), displayname])
     return True

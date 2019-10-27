@@ -90,8 +90,7 @@ def signup():
 @app.route("/home")
 def home():
     if "user" in session:
-        collection = zip(get("users", "displayname").split(
-            ","), get("users", "userid").split(","))
+        collection = get("users", "userid, displayname")
         return render_template("home.html", collection=collection)
     return redirect("/")
 
@@ -99,34 +98,54 @@ def home():
 @app.route("/<userid>")
 def user(userid):
     if "user" in session:
-        collections = get("blogs", "title, userid", "WHERE userid = %s" % userid).split(",")
-        return render_template("blog.html", user=session["user"], collections=collections)
+        selected_user = get("users", "username", "WHERE userid = '%s'" % userid)[0][0]
+        collections = get("blogs", "title, blogid",
+                          "WHERE userid = '%s'" % userid)
+        return render_template("blog.html", userid=userid, user=selected_user, collection=collections)
     return redirect("/")
 
 # Display the entry for each user's blog
 @app.route("/<userid>/<blogid>")
-def blog(userid, blogid):
+def post(userid, blogid):
     if "user" in session:
-        return render_template("post.html")
-        """
-        if request.method == 'POST':
-            if request.form['new_post'] == 'Create Post':
-                create_post(g.userid, g.username)
-                return render_template("edit.html")
-        else:"""
+        content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)
+        return render_template("post.html", content = content)
     return redirect("/")
 
-@app.route("/newpost/<userid>")
-def newpost(userid):
+
+@app.route("/<userid>/update")
+def update(userid, blogid = ""):
     if "user" in session:
-        blogid = create_post(userid)
-        return redirect("/<userid>/<blogid>/edit")
+        try:
+            assert request.args["newTitle"], "No Title Entered"
+            author = get("users", "displayname",
+                         "WHERE username = '%s'" % session["user"])[0][0]
+            title = request.args["newTitle"]
+            content = request.args["newContent"]
+            blogid = create_post(userid, author, title, content)
+            return redirect(url_for("post", userid = userid, blogid = blogid))
+        except AssertionError as ae:
+            return render_template("edit.html", error=str(ae.args[0]))
     return redirect("/")
 
+
+@app.route("/<userid>/new/edit")
 @app.route("/<userid>/<blogid>/edit")
-def edit(userid, blogid):
+def edit(userid = "", blogid = ""):
     if "user" in session:
-        return render_template("edit.html")
+        if not blogid:
+            title = get("blogs", "title", "WHERE blogid = '%s'" % blogid)
+            content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)
+            return render_template("edit.html", userid = userid, blogid = blogid, title=title, content=content)
+        else:
+            return render_template("edit.html")
+    return redirect("/")
+
+
+@app.route("/delete")
+def delete():
+    if "usr" in session:
+        pass
     return redirect("/")
 
 # Logout the user

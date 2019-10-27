@@ -150,12 +150,39 @@ def delete():
         pass
     return redirect("/")
 
-# Edit mode for adding or editing posts
-@app.route("/edit/<blogid>")
-def edit(blogid):
+
+@app.route("/<userid>/<blogid>/update")
+def update(userid, blogid = "new"):
     if "user" in session:
-        return render_template("edit.html",userId=session["user"],
-                                currentPost=blogid)
+        try:
+            assert request.args["newTitle"], "No Title Entered"
+            author = get("users", "displayname",
+                         "WHERE username = '%s'" % session["user"])[0][0]
+            title = request.args["newTitle"]
+            content = request.args["newContent"]
+            if blogid == "new":
+                blogid = create_post(userid, author, title, content)
+            else:
+                update_post(blogid, content)
+            return redirect(url_for("post", userid = userid, blogid = blogid))
+        except AssertionError as ae:
+            return render_template("edit.html", error=str(ae.args[0]))
+    return redirect("/")
+
+@app.route("/<userid>/new/edit")
+@app.route("/<userid>/<blogid>/edit")
+@app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>")
+def edit(userid, blogid = "new", title = "", content = ""):
+    if "user" in session:
+        print(userid)
+        return render_template("edit.html", userid = userid, blogid = blogid, title = title, content = content)
+    return redirect("/")
+
+
+@app.route("/delete")
+def delete():
+    if "usr" in session:
+        pass
     return redirect("/")
 
 # Logout the user

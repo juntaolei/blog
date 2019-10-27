@@ -209,11 +209,11 @@ def update(userid, blogid = "new"):
         try:
             assert request.args["newTitle"], "No Title Entered"
             title = request.args["newTitle"]
-            assert not get("blogs", "title", "WHERE title = '%s'" % title), "Duplicate Title"
             author = get("users", "displayname",
                          "WHERE username = '%s'" % session["username"])[0][0]
             content = request.args["newContent"]
             if blogid == "new":
+                assert not get("blogs", "title", "WHERE title = '%s'" % title), "Duplicate Title"
                 blogid = create_post(userid, author, title, content)
             else:
                 update_post(blogid, content)
@@ -271,8 +271,6 @@ def changesettings():
                             request.args["newdisplayname"])
             if request.args["newpassword"]:
                 try:
-                    print(request.args["newpassword"])
-                    print(request.args["currentpassword"])
                     assert request.args["currentpassword"], "Enter Your Current Password"
                     assert request.args["newpassword"] == request.args["confirm"], "Mismatched New Passwords"
                     msg = update_auth(

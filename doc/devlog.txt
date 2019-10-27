@@ -122,4 +122,5 @@ maoG -- 2019-10-27 19:09
   Final Edits
     * reviewed project as a whole (self demo)
     * fixed bugs when user tries to edit someone else's stuff
+    * allowed user to edit the post title by changing the python code
     * updated devlog and design doc

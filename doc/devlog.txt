@@ -1,9 +1,24 @@
+nicholS 2019-10-27 00:46
+  * worked on "my blog" redirecting to user blog
+  * edited post.html and blog.html templates to clean them up
+
 maoG -- 2019-10-26 11:13
   Adding Features:
     * Added new post button
-    * Attempted to create connection between edit page and database 
+    * Attempted to create connection between edit page and database
 (nicholS will continue)
     * Fixed syntax throughout templates
+
+nicholS -- 2019-10-25 19:53
+    Creating, Editing, and Deleting Blogs:
+      * Added create blog and delete blog to templates
+      * Added edit route to display edit.html for each post
+      * Added python methods to create, delete, and update Posts
+
+nicholS -- 2019-10-24 22:53
+    Database:
+      * tried to fix problems with adding to databases
+      * tried new login function
 
 leiJ -- 2019-10-23 18:13
   Clean Repository:
@@ -20,9 +35,10 @@ maoG -- 2019-10-24 14:29
     * Created edit.html template, meaning that the templates are finished
 
 nicholS -- 2019-10-23 23:34
-  * Made Users table that takes input username and Password
-  * Facilitated adding users to database
-  * Started functions for tables for individual users/blogs
+  Database:
+    * Made Users table that takes input username and Password
+    * Facilitated adding users to database
+    * Started functions for tables for individual users/blogs
 
 maoG -- 2019-10-23 14:32
   HTML Progress:

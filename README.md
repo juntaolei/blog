@@ -1,8 +1,5 @@
 # blog by quality_assurance
 
-Dev Branch Status Below
-Check ***Issues***
-
 # Instructions
 1. Clone this repo.
 2. Install Flask using the following command:
@@ -13,10 +10,6 @@ pip install -U Flask
 ```
 python3 app.py
 ```
-
-# Working Branches
-* master
-* edit (ongoing)
 
 # Modules
 ### Auth Module
@@ -75,6 +68,14 @@ python3 app.py
     * /<username>
     * /<username>/<blog_id>
     * ...
+```
+
+---
+
+### Edit Module
+---
+```
+  
 ```
 
 # Roster + Role

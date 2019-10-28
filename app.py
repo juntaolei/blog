@@ -74,20 +74,20 @@ def index():
 # Authenticates the user
 @app.route("/login")
 def login():
-    if "isloggedin" in session:
-        return redirect(url_for("home"))
+    if "isloggedin" in session: # if already logged in
+        return redirect(url_for("home")) # go to home
     if "creds" in g:
         try:
             assert g.username, "No Username Entered"
             assert g.password, "No Password Entered"
-            if auth(g.username, g.password):
+            if auth(g.username, g.password): # successful login
                 session["isloggedin"] = True
                 session["username"] = g.username
                 session["userid"] = str(get("users", "userid", "WHERE username = '%s'" % g.username)[0][0])
                 return redirect(
                     url_for("home")
                 )
-            return render_template(
+            return render_template( # unsuccessful login
                 "login.html",
                 error="Invalid Credentials"
             )
@@ -129,35 +129,35 @@ def signup():
 # Display the home for logged in user
 @app.route("/home")
 def home():
-    if "isloggedin" in session:
+    if "isloggedin" in session: # display all the blogs if logged in
         collection = get("users", "userid, displayname")
         return render_template(
             "home.html",
             collection = collection
         )
-    return redirect("/")
+    return redirect("/") # if not logged in, go to login page
 
 # Display blog of logged in user
 @app.route("/myblog")
 def myblog():
-    if "isloggedin" in session:
+    if "isloggedin" in session: # use same template as any other blog
         return redirect(
             url_for(
                 "user",
                 userid = session["userid"]
             )
         )
-    return redirect("/")
+    return redirect("/") # not logged in
 
 
 # Display the blog for each user
 @app.route("/<userid>")
 def user(userid):
-    if "isloggedin" in session:
+    if "isloggedin" in session: # SQLite queries to display posts
         selected_user = get("users", "displayname", "WHERE userid = '%s'" % userid)[0][0]
         collection = get("blogs", "title, blogid",
                           "WHERE userid = '%s'" % userid)
-        if userid != session["userid"]:
+        if userid != session["userid"]: # not My Blog, so cannot edit
             return render_template(
                 "blog.html",
                 canedit = False,
@@ -172,17 +172,17 @@ def user(userid):
             user = selected_user,
             collection = collection
         )
-    return redirect("/")
+    return redirect("/") # not logged in
 
 # Display the entry for each user's blog
 @app.route("/<userid>/<blogid>")
 def post(userid, blogid):
-    if "isloggedin" in session:
+    if "isloggedin" in session: # SQLite queries to display content
         author = get("blogs", "author", "WHERE blogid = '%s'" % blogid)[0][0]
         title = get("blogs", "title", "WHERE blogid = '%s'" % blogid)[0][0]
         content = get("blogs", "content", "WHERE blogid = '%s'" % blogid)[0][0]
         lastupdated = get("blogs", "lastupdated", "WHERE blogid = '%s'" % blogid)[0][0]
-        if userid != session["userid"]:
+        if userid != session["userid"]: # not own post, so cannot edit
             return render_template("post.html",
                 canedit = False,
                 title = title,
@@ -200,9 +200,9 @@ def post(userid, blogid):
             title = title,
             lastupdated = lastupdated
         )
-    return redirect("/")
+    return redirect("/") # not logged in
 
-
+# no actual page, just a redirect for when user saves edits
 @app.route("/<userid>/<blogid>/update")
 def update(userid, blogid = "new"):
     if "isloggedin" in session:
@@ -212,12 +212,12 @@ def update(userid, blogid = "new"):
             author = get("users", "displayname",
                          "WHERE username = '%s'" % session["username"])[0][0]
             content = request.args["newContent"]
-            if blogid == "new":
+            if blogid == "new": # if it's a new post
                 assert not get("blogs", "title", "WHERE title = '%s'" % title), "Duplicate Title"
                 blogid = create_post(userid, author, title, content)
-            else:
+            else: # otherwise
                 update_post(blogid, content, title)
-            return redirect(
+            return redirect( # return to page for the specific post
                 url_for(
                     "post",
                     userid = userid,
@@ -233,16 +233,16 @@ def update(userid, blogid = "new"):
                 title = "",
                 content = request.args["newContent"]
             )
-    return redirect("/")
+    return redirect("/") # not logged in
 
-@app.route("/<userid>/new/edit")
-@app.route("/<userid>/<blogid>/edit")
-@app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>")
+@app.route("/<userid>/new/edit") # new post
+@app.route("/<userid>/<blogid>/edit") # edit post
+@app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>") # edit post with current content and title
 def edit(userid, blogid = "new", title = "", content = ""):
     if "isloggedin" in session:
-        if userid != session["userid"]:
+        if userid != session["userid"]: # if user isn't allowed to edit
             return redirect("/{}/{}".format(userid, blogid))
-        return render_template(
+        return render_template( # actual edit page
             "edit.html",
             canedit = True,
             userid = userid,
@@ -250,15 +250,16 @@ def edit(userid, blogid = "new", title = "", content = ""):
             title = title,
             content = content
         )
-    return redirect("/")
+    return redirect("/") # not logged in
 
-
+# deleting a post, not an actual page
 @app.route("/<userid>/<blogid>/delete")
 def delete(userid, blogid):
     if "isloggedin" in session and userid == session["userid"]:
-        delete_post(blogid)
-    return redirect("/")
+        delete_post(blogid) # allowed to delete the post
+    return redirect("/") # redirect to home if logged in
 
+# update settings for a user
 @app.route("/changesettings")
 def changesettings():
     if "isloggedin" in session and session["userid"]:
@@ -291,11 +292,12 @@ def changesettings():
             displayname = get("users", "displayname",
                             "WHERE userid = '%s'" % session["userid"])[0][0]
         )
-    return redirect("/")
+    return redirect("/") # not logged in
 
+# search engine page
 @app.route("/search")
 def search():
-    if "isloggedin" in session:
+    if "isloggedin" in session: # SQLite query to display results
         collection = get("blogs", "title, blogid, userid",
                          "WHERE title LIKE '%s'" % request.args["query"])
         return render_template(

@@ -200,9 +200,15 @@ def post(userid, blogid):
             title = title,
             lastupdated = lastupdated
         )
+<<<<<<< HEAD
     return redirect("/") # not logged in
 
 # no actual page, just a redirect for when user saves edits
+=======
+    return redirect("/")
+
+# Update or create a post given the userid and/or the blogid depending on if it is created
+>>>>>>> b1c3a2043e1a24dc4cae617c67dc8e928ed133f0
 @app.route("/<userid>/<blogid>/update")
 def update(userid, blogid = "new"):
     if "isloggedin" in session:
@@ -235,9 +241,16 @@ def update(userid, blogid = "new"):
             )
     return redirect("/") # not logged in
 
+<<<<<<< HEAD
 @app.route("/<userid>/new/edit") # new post
 @app.route("/<userid>/<blogid>/edit") # edit post
 @app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>") # edit post with current content and title
+=======
+# Edit an existing post or create a new post
+@app.route("/<userid>/new/edit")
+@app.route("/<userid>/<blogid>/edit")
+@app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>")
+>>>>>>> b1c3a2043e1a24dc4cae617c67dc8e928ed133f0
 def edit(userid, blogid = "new", title = "", content = ""):
     if "isloggedin" in session:
         if userid != session["userid"]: # if user isn't allowed to edit
@@ -250,16 +263,26 @@ def edit(userid, blogid = "new", title = "", content = ""):
             title = title,
             content = content
         )
+<<<<<<< HEAD
     return redirect("/") # not logged in
 
 # deleting a post, not an actual page
+=======
+    return redirect("/")
+
+# Delete a post based on the userid and user can only delete post(s) from the logged in user
+>>>>>>> b1c3a2043e1a24dc4cae617c67dc8e928ed133f0
 @app.route("/<userid>/<blogid>/delete")
 def delete(userid, blogid):
     if "isloggedin" in session and userid == session["userid"]:
         delete_post(blogid) # allowed to delete the post
     return redirect("/") # redirect to home if logged in
 
+<<<<<<< HEAD
 # update settings for a user
+=======
+# Change the display name or password of the logged in user
+>>>>>>> b1c3a2043e1a24dc4cae617c67dc8e928ed133f0
 @app.route("/changesettings")
 def changesettings():
     if "isloggedin" in session and session["userid"]:
@@ -294,7 +317,11 @@ def changesettings():
         )
     return redirect("/") # not logged in
 
+<<<<<<< HEAD
 # search engine page
+=======
+# Search based on the title of a post
+>>>>>>> b1c3a2043e1a24dc4cae617c67dc8e928ed133f0
 @app.route("/search")
 def search():
     if "isloggedin" in session: # SQLite query to display results

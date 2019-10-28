@@ -4,7 +4,7 @@ from re import search
 # Flask Lib
 from flask import g
 
-
+# Return the column types of a table
 def header_types(tbl_name):
     cur = g.db.cursor()
     cur.execute("PRAGMA TABLE_INFO (%s)" % (tbl_name))
@@ -12,7 +12,7 @@ def header_types(tbl_name):
     cur.close()
     return [str(head[1]) for head in heads]
 
-
+# Insert a row into a table given the values
 def insert(tbl_name, values):
     try:
         cur = g.db.cursor()
@@ -32,7 +32,7 @@ def insert(tbl_name, values):
     except:
         return False
 
-
+# Get certain data from a table
 def get(tbl_name, column, conditional=""):
     cur = g.db.cursor()
     cur.execute("SELECT %s FROM %s %s" % (column, tbl_name, conditional))

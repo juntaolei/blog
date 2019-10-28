@@ -1,73 +1,72 @@
-# blog by <quality_assurance>
+# **blog** *by* **quality_assurance**
 
 # Instructions
-1. Clone this repo.
+1. Clone this repository using Git or downloading a zip.
 2. Install Flask using the following command:
 ```
-pip install -U Flask
+pip3 install -U Flask
 ```
 3. Run app.py to start the Flask app.
 ```
 python3 app.py
 ```
+4. Visit ```http://127.0.0.1:5000``` to view the app.
 
 # Modules
-### Auth Module
+### Required Flask Components
 ---
 ```
-  hash() uses the builtin hashlib to hash a given password.
-  * Implements SHA256
-  * Uses a Flask app wide salt
-  * Returns a hexadecimal representation of the hash
-
-  auth() authenticates a given password with a given hash.
-  * Uses hash() to compute a hash and compare it against the given hash
-
-  hash() is necessary to generate a hash to either store or compare against.
-  auth() is necessary as a wrapper function for authentication.
-
-  hash() and auth() will be used for signup or login functionality.
-  The calculated hash will be stored in the database in place of password.
+  Flask, g, session, redirect, url_for, render_template, request, and current_app are Flask components that are used.
+  
+  Flask constructor is used to create the Flask app.
+  g is used as a namespace object to store data during an application context.
+  session is used to store data during a user's session.
+  redirect is used to route the application.
+  url_for is used as a method in redirecting to a different route.
+  render_template is used a way to render templates in Flask.
+  request is used as a method to receive data from client side.
+  current_app is used as a proxy to access data associated with the current application.
 ```
 
 ---
 
-### DBConn Module
+### Standard Python Lib
 ---
 ```
-  conn() connects the Flask app to the database.
-  * Connection stored in Flask's g object
-
-  close() terminates an existing SQLite Connection.
-  * Close an existing connection in g if it exist
-
-  conn() and close() are necessary to connect to the database for data addition/retrieval.
-
-  conn() and close() are used in app context to be automatically invoked on HTTP request.
+  search() is imported from re in order to use regular expressions.
+  Number is imported from numbers to act as a type for most types of number.
+  sha256() is imported from hashlib to perform the SHA-256 hash algorithmn.
+  connect() is imported from sqlite3 to establish a SQLite3 Connection.
 ```
 
 ---
 
-### DBFunc Module
+### Auth Module (User Generated)
 ---
 ```
-  header_types() returns the types of a table's columns.
+  hash(password) uses the builtin hashlib to hash a given password.
+  auth(username, password) authenticates a given password with a given hash.
+  register(username, password, displayname) registers the user if the user does not exist.
+  update_auth(username, currentpassword, newpassword) updates the password given the current password is valid.
+```
 
-  insert() adds a row to a given table.
+---
 
-  get() returns certain piece(s) of data from the database.
+### DBConn Module (User Generated)
+---
+```
+  conn() connects the Flask app to the database, storing the connection stored in Flask's g object.
+  close() terminates an existing SQLite Connection in g if it exist.
+```
 
-  header_types() can clarify the type of the data that needs to be inserted into the database.
-  insert() and get() are necessary in retrieving or adding data to the database.
+---
 
-  header_types() can be used to identify the column types of tables to insure no error with 
-  wrong datatype insertions.
-  insert() and get() are used throughout the Flask app to add, edit, or view data in the following:
-    * /signup
-    * /login
-    * /<username>
-    * /<username>/<blog_id>
-    * ...
+### DBFunc Module (User Generated)
+---
+```
+  header_types(tbl_name) returns the types of a table's columns.
+  insert(tbl_name, values) adds a row to a given table with given values.
+  get(tbl_name, column, conditional=””) returns certain piece(s) of data from the database based on the conditional(s).
 ```
 
 ---
@@ -75,7 +74,10 @@ python3 app.py
 ### Edit Module
 ---
 ```
-  
+  create_post(userid, author, title, content) inserts a row for a blog post into the blogs table.
+  update_post(blogid, blogcontent, blogtitle) updates a row from the blogs table.
+  update_user(username, field, newvalue) updates a certain attribute of a user in the users table
+  delete_post(blogid) deletes a row from the blogs table given the blog id
 ```
 
 # Roster + Role

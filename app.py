@@ -202,7 +202,7 @@ def post(userid, blogid):
         )
     return redirect("/")
 
-
+# Update or create a post given the userid and/or the blogid depending on if it is created
 @app.route("/<userid>/<blogid>/update")
 def update(userid, blogid = "new"):
     if "isloggedin" in session:
@@ -235,6 +235,7 @@ def update(userid, blogid = "new"):
             )
     return redirect("/")
 
+# Edit an existing post or create a new post
 @app.route("/<userid>/new/edit")
 @app.route("/<userid>/<blogid>/edit")
 @app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>")
@@ -252,13 +253,14 @@ def edit(userid, blogid = "new", title = "", content = ""):
         )
     return redirect("/")
 
-
+# Delete a post based on the userid and user can only delete post(s) from the logged in user
 @app.route("/<userid>/<blogid>/delete")
 def delete(userid, blogid):
     if "isloggedin" in session and userid == session["userid"]:
         delete_post(blogid)
     return redirect("/")
 
+# Change the display name or password of the logged in user
 @app.route("/changesettings")
 def changesettings():
     if "isloggedin" in session and session["userid"]:
@@ -293,6 +295,7 @@ def changesettings():
         )
     return redirect("/")
 
+# Search based on the title of a post
 @app.route("/search")
 def search():
     if "isloggedin" in session:

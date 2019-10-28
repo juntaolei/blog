@@ -7,11 +7,11 @@ from flask import current_app, g
 from .dbfunc import insert, get
 from .edit import update_user
 
-
+# Hash the password using SHA-256 algorithm
 def get_hash(password):
     return sha256((current_app.config["SALT"] + password).encode()).hexdigest()
 
-
+# Authenticates the user given a username and password with the hashed password
 def auth(username, password):
     try:
         hashpassword = get("users", "hashpassword",
@@ -21,7 +21,7 @@ def auth(username, password):
     except:
         return False
 
-
+# Registers the user given a username and a password and the displayname is optional
 def register(username, password, displayname):
     if not auth(username, password):
         if not displayname:
@@ -29,7 +29,7 @@ def register(username, password, displayname):
         insert("users", ["NULL", username, get_hash(password), displayname])
     return True
 
-
+# Updates the password of the current user
 def update_auth(username, currentpassword, newpassword):
     try:
         assert auth(username, currentpassword), "Wrong Password"

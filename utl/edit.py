@@ -3,7 +3,7 @@ from flask import g
 # User Modules
 from .dbfunc import insert, get
 
-
+# Create a post given the following parameters
 def create_post(userid, author, title, content):
     try:
         insert("blogs", ["NULL", userid, author,
@@ -13,7 +13,7 @@ def create_post(userid, author, title, content):
     except:
         return False
 
-
+# Update a post given the following parameters
 def update_post(blogid, blogcontent, blogtitle):
     try:
         cur = g.db.cursor()
@@ -28,7 +28,7 @@ def update_post(blogid, blogcontent, blogtitle):
     except:
         return False
 
-
+# Update a user's settings given the field and new value
 def update_user(username, field, newvalue):
     try:
         cur = g.db.cursor()
@@ -50,7 +50,7 @@ def update_user(username, field, newvalue):
     except:
         return "Error With Update"
 
-
+# Delete a post given the blog id.
 def delete_post(blogid):
     try:
         cur = g.db.cursor()

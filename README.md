@@ -1,4 +1,4 @@
-# **blog*** *by* ***quality_assurance**
+# **blog** *by* **quality_assurance**
 
 # Instructions
 1. Clone this repository using Git or downloading a zip.

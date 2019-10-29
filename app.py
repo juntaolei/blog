@@ -240,7 +240,6 @@ def update(userid, blogid = "new"):
 @app.route("/<userid>/new/edit") # new post
 @app.route("/<userid>/<blogid>/edit") # edit a post
 @app.route("/<userid>/<blogid>/edit?t=<title>&c=<content>") # edit a post with current content and title
->>>>>>> b1c3a2043e1a24dc4cae617c67dc8e928ed133f0
 def edit(userid, blogid = "new", title = "", content = ""):
     if "isloggedin" in session:
         if userid != session["userid"]: # if user isn't allowed to edit

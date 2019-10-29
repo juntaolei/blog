@@ -32,11 +32,6 @@ def update_post(blogid, blogcontent, blogtitle):
 def update_user(username, field, newvalue):
     try:
         cur = g.db.cursor()
-        print("UPDATE users SET %s = '%s' WHERE username = '%s'" % (
-            field,
-            newvalue,
-            username
-        ))
         cur.execute(
             "UPDATE users SET %s = '%s' WHERE username = '%s'" % (
                 field,
